@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generating Teams</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; 
+            height: 100vh;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            margin: 0;
+            padding: 8px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px; 
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+       
+
+        div {
+            text-align: center;
+        }
+
+        .nested-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+
+        .nested-th, .nested-td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .nested-th {
+            background-color: #f2f2f2;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #d83131;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #a31d1d;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Team</th>
+                    <th>Members</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- {% set row_count = 1 %} -->
+                {% for team in teams %}
+                
+                    <tr>
+                        <td>Team {{ loop.index }}</td>
+                        <td>
+                            <table class="nested-table">
+                                <tbody>
+                                    {% for member in team[1] %}
+                                        <tr>
+                                            <td>{{ member }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </td>
+                        
+                    </tr>
+                    <!-- {% set row_count = row_count + 1 %} -->
+                {% endfor %}
+            </tbody>
+        </table>
+    
+
+         <form action="/generate_teams" method="post">
+            <input type="hidden" name="names" value="{{ names }}">
+            <input type="hidden" name="num_teams" value="{{ num_teams }}">
+            <input type="submit" value="Shuffle Teams">
+        </form>
+
+
+       
+        <form action="/" method="get">
+            <input type="submit" value="Change Input">
+        </form>
+    </div>
+    
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const refresh = urlParams.get('refresh');
+
+        if (refresh) {
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
