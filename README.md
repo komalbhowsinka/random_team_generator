@@ -25,3 +25,6 @@ Team 3	 | Theresa
 Team 4	 | Kruna
          | Chris
          | Heather
+
+
+To Run this in local you need to install Python and pip install Flask (Jinja2)
